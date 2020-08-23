@@ -1,12 +1,13 @@
 import { Router } from 'express'
 
-import AppointmentsController from '../controllers/AppointmentController'
+import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
+import AppointmentsController from '../controllers/AppointmentController'
 const appointmentsController = new AppointmentsController()
 
 const appointmentsRounter = Router()
-
 appointmentsRounter
+  .use(ensureAuthenticated)
   .get('/', appointmentsController.index)
   .post('/', appointmentsController.create)
 

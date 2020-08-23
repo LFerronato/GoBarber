@@ -6,8 +6,7 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository'
 
 // RequestDTO
 interface Request {
-  provider: string
-  // eslint-disable-next-line prettier/prettier
+  provider_id: string
   date: Date
 }
 /**
@@ -22,7 +21,7 @@ interface Request {
 
 class CreateAppointmentService {
   // execute or run
-  public async run({ provider, date }: Request): Promise<Appointment> {
+  public async run({ provider_id, date }: Request): Promise<Appointment> {
     const appointmentsRepository = getCustomRepository(AppointmentsRepository)
 
     const appointmentDate = startOfHour(date)
@@ -34,8 +33,9 @@ class CreateAppointmentService {
     if (findAppointmentInSameDate) {
       throw Error('This datetime is busy!')
     }
+
     const appointment = appointmentsRepository.create({
-      provider,
+      provider_id,
       "date": appointmentDate
     })
     await appointmentsRepository.save(appointment)

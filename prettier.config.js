@@ -1,7 +1,8 @@
 module.exports = {
-  singleQuote: true,
-  trailingComma: 'all',
-  arrowParens: 'avoid',
   semi: false,
-  // 'quote-props': 'preserve'
+  singleQuote: true,
+  arrowParens: 'avoid',
+  trailingComma: 'all',
+  endOfLine: 'auto',
+  printWidth: 90,
 }

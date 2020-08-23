@@ -12,16 +12,12 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository'
  * Responder
  */
 
-class appointmentsController {
+class AppointmentsController {
   async index(req: Request, resp: Response) {
     try {
-      console.log('antes')
       const appointmentsRepository = getCustomRepository(AppointmentsRepository)
-      console.log('foi')
       const result = await appointmentsRepository.find()
-      console.log(result)
-
-      return resp.json(result) // link "all"
+      return resp.json(result)
     } catch (error) {
       return resp.status(400).json({ 'error': error.message })
     }
@@ -29,14 +25,14 @@ class appointmentsController {
 
   async create(req: Request, resp: Response) {
     try {
-      const { provider, date } = req.body
+      const { provider_id, date } = req.body
 
       const parsedDate = parseISO(date)
 
       const createAppointment = new CreateAppointmentService()
 
       const appointment = await createAppointment.run({
-        provider,
+        provider_id,
         'date': parsedDate,
       })
       return resp.status(201).json(appointment)
@@ -46,4 +42,4 @@ class appointmentsController {
   }
 }
 
-export default appointmentsController
+export default AppointmentsController
