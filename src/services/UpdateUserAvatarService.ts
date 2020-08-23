@@ -4,19 +4,22 @@ import path from 'path'
 import uploadConfig from '../configs/upload'
 import fs from 'fs'
 
+import AppError from '../errors/AppError'
+
 import User from "../models/User"
 
 interface Request {
   userId: string
   avatarFilename: string
 }
+
 class UpdateUserAvatarService {
   public async run({ userId, avatarFilename }: Request): Promise<{ user: User }> {
     const usersRespository = getRepository(User)
 
     const user = await usersRespository.findOne(userId)
 
-    if (!user) throw new Error('Only authenticated users can change avatar.')
+    if (!user) throw new AppError('Only authenticated users can change avatar.', 401)
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar)

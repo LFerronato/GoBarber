@@ -13,15 +13,12 @@ const updateUserAvatarService = new UpdateUserAvatarService()
 
 class UsersController {
   async create(req: Request, resp: Response) {
-    try {
-      const { name, email, password } = req.body
+    const { name, email, password } = req.body
 
-      const user = await createUserService.run({ name, email, password })
-      delete user.password
-      return resp.json(user)
-    } catch (error) {
-      return resp.status(400).json({ 'error': error.message })
-    }
+    const user = await createUserService.run({ name, email, password })
+    delete user.password
+
+    return resp.json(user)
   }
   async updateAvatar(req: Request, resp: Response) {
     const { user } = await updateUserAvatarService.run({

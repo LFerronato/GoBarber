@@ -1,6 +1,8 @@
 import { startOfHour } from 'date-fns'
 import { getCustomRepository } from 'typeorm'
 
+import AppError from '../errors/AppError'
+
 import Appointment from '../models/Appointment'
 import AppointmentsRepository from '../repositories/AppointmentsRepository'
 
@@ -31,7 +33,7 @@ class CreateAppointmentService {
         appointmentDate
       )
     if (findAppointmentInSameDate) {
-      throw Error('This datetime is busy!')
+      throw new AppError('This datetime is busy!')
     }
 
     const appointment = appointmentsRepository.create({
